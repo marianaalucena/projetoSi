@@ -41,8 +41,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 	}
 
 	public void saveProduto(Produto produto) {
-		produto.mudaId(counter.incrementAndGet());
-		produtos.add(produto);
+		produtos.add(new Produto(counter.incrementAndGet(), produto.getNome(), 
+				produto.getCodigoBarra(),
+				produto.getFabricante(),
+				produto.getCategoria()));
+
 	}
 
 	public void updateProduto(Produto produto) {
