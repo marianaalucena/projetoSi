@@ -64,15 +64,15 @@ app.controller("SearchProductCtrl", function ($scope, $uibModal, $http, toastr,$
         });
     };
 
-    $scope.pesquisarProdutoPorId = function(id) {
+    $scope.pesquisarProdutoPorNome = function(name) {
         // implementar
-        console.log(id)
-        $http.get("http://localhost:8080/api/produto/" + id)
+    	
+        $http.get("http://localhost:8080/api/produto/" + name)
             .then(function successCallback(response) {
+            	console.log(response);
                 $scope.productsList = [
                     response.data
                 ]
-                console.error("Não carregou")
             }, function errorCallback(error) {
                 console.error(error);
                 if (error.status === 404) {
@@ -84,7 +84,7 @@ app.controller("SearchProductCtrl", function ($scope, $uibModal, $http, toastr,$
                 }
             });
     };
-
+    
     $scope.openCriarLoteDialog = function(product) {
 
         var modalInstance = $uibModal.open({
