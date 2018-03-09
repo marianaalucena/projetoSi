@@ -1,6 +1,7 @@
 package com.ufcg.si1.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -82,22 +83,23 @@ public class RestApiController {
 		return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/produto/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> consultarProduto(@PathVariable("id") long id) {
+	@RequestMapping(value = "/produto/{busca}", method = RequestMethod.GET)
+	public ResponseEntity<?> consultarProduto(@PathVariable("busca") String busca) {
 
-		Produto p = null;
+		//Regex para pesquisar nomes semelhantes
+		List<Produto> produtos = new ArrayList<>();
 
 		for (Produto produto : produtoService.findAllProdutos()) {
-			if (produto.getId() == id) {
-				p = produto;
+			if (produto.getNome().contains(busca)) {
+				produtos.add(produto);
 			}
 		}
 
-		if (p == null) {
-			return new ResponseEntity(new CustomErrorType("Produto with id " + id + " not found"),
+		if (produtos.size() == 0) {
+			return new ResponseEntity(new CustomErrorType("Produts with name " + busca + " not found"),
 					HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Produto>(p, HttpStatus.OK);
+		return new ResponseEntity<List<Produto>>(produtos, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.PUT)
