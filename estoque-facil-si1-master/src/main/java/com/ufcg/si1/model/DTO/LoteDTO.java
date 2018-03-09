@@ -1,6 +1,8 @@
 package com.ufcg.si1.model.DTO;
 
-public class LoteDTO {
+import java.io.Serializable;
+
+public class LoteDTO implements Serializable {
 
     private int numeroDeItens;
     private String dataDeValidade;
