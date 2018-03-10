@@ -55,15 +55,8 @@ public class RestApiController {
 	@RequestMapping(value = "/produto/", method = RequestMethod.POST)
 	public ResponseEntity<?> criarProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) {
 
-		boolean produtoExiste = false;
-
-		for (Produto p : produtoService.findAllProdutos()) {
-			if (p.getCodigoBarra().equals(produto.getCodigoBarra())) {
-				produtoExiste = true;
-			}
-		}
-
-		if (produtoExiste) {
+	
+		if (produtoExiste(produto)) {
 			return new ResponseEntity(new CustomErrorType("O produto " + produto.getNome() + " do fabricante "
 					+ produto.getFabricante() + " ja esta cadastrado!"), HttpStatus.CONFLICT);
 		}
@@ -81,6 +74,17 @@ public class RestApiController {
 		// headers.setLocation(ucBuilder.path("/api/produto/{id}").buildAndExpand(produto.getId()).toUri());
 
 		return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
+	}
+	
+	private boolean produtoExiste(Produto produto) {
+		boolean produtoExiste = false;
+
+		for (Produto p : produtoService.findAllProdutos()) {
+			if (p.getCodigoBarra().equals(produto.getCodigoBarra())) {
+				produtoExiste = true;
+			}
+		} return produtoExiste;
+
 	}
 
 	@RequestMapping(value = "/produto/{busca}", method = RequestMethod.GET)
@@ -104,20 +108,16 @@ public class RestApiController {
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateProduto(@PathVariable("id") long id, @RequestBody Produto produto) {
 
-		Produto currentProduto = null;
-
-		for (Produto p : produtoService.findAllProdutos()) {
-			if (p.getId() == id) {
-				currentProduto = p;
-			}
-		}
+		Produto currentProduto =  buscaPorId(id);
 
 		if (currentProduto == null) {
 			return new ResponseEntity(new CustomErrorType("Unable to upate. Produto with id " + id + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
 
+
 		currentProduto.updateProduto(produto);
+
 
 		produtoService.updateProduto(currentProduto);
 		return new ResponseEntity<Produto>(currentProduto, HttpStatus.OK);
@@ -126,13 +126,7 @@ public class RestApiController {
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
 
-		Produto user = null;
-
-		for (Produto produto : produtoService.findAllProdutos()) {
-			if (produto.getId() == id) {
-				user = produto;
-			}
-		}
+		Produto user = buscaPorId(id);
 
 		if (user == null) {
 			return new ResponseEntity(new CustomErrorType("Unable to delete. Produto with id " + id + " not found."),
@@ -140,6 +134,16 @@ public class RestApiController {
 		}
 		produtoService.deleteProdutoById(id);
 		return new ResponseEntity<Produto>(HttpStatus.NO_CONTENT);
+	}
+	
+	private Produto buscaPorId(long id) {
+		Produto currentProduto = null;
+
+		for (Produto p : produtoService.findAllProdutos()) {
+			if (p.getId() == id) {
+				currentProduto = p;
+			}
+		} return currentProduto;
 	}
 
 	@RequestMapping(value = "/produto/{id}/lote", method = RequestMethod.POST)
