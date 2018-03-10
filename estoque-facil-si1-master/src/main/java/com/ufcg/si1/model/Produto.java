@@ -86,6 +86,14 @@ public class Produto {
 	public void mudaCategoria(String categoria) {
 		this.categoria = categoria;
 	}
+	
+	public void updateProduto(Produto produto) {
+		this.mudaNome(produto.getNome());
+		this.setPreco(produto.getPreco());
+		this.setCodigoBarra(produto.getCodigoBarra());
+		this.mudaFabricante(produto.getFabricante());
+		this.mudaCategoria(produto.getCategoria());
+	}
 		
 	public void mudaSituacao(int situacao) throws ObjetoInvalidoException {
 		switch (situacao) {

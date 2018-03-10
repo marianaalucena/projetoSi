@@ -86,7 +86,6 @@ public class RestApiController {
 	@RequestMapping(value = "/produto/{busca}", method = RequestMethod.GET)
 	public ResponseEntity<?> consultarProduto(@PathVariable("busca") String busca) {
 
-		//Regex para pesquisar nomes semelhantes
 		List<Produto> produtos = new ArrayList<>();
 
 		for (Produto produto : produtoService.findAllProdutos()) {
@@ -118,21 +117,7 @@ public class RestApiController {
 					HttpStatus.NOT_FOUND);
 		}
 
-		currentProduto.mudaNome(produto.getNome());
-		currentProduto.setPreco(produto.getPreco());
-		currentProduto.setCodigoBarra(produto.getCodigoBarra());
-		currentProduto.mudaFabricante(produto.getFabricante());
-		currentProduto.mudaCategoria(produto.getCategoria());
-
-		// resolvi criar um servi�o na API s� para mudar a situa��o do produto
-		// esse c�digo n�o precisa mais
-		// try {
-		// currentProduto.mudaSituacao(produto.pegaSituacao());
-		// } catch (ObjetoInvalidoException e) {
-		// return new ResponseEntity(new CustomErrorType("Unable to upate. Produto with
-		// id " + id + " invalid."),
-		// HttpStatus.NOT_FOUND);
-		// }
+		currentProduto.updateProduto(produto);
 
 		produtoService.updateProduto(currentProduto);
 		return new ResponseEntity<Produto>(currentProduto, HttpStatus.OK);
@@ -169,6 +154,12 @@ public class RestApiController {
 
 		Lote lote = loteService.saveLote(new Lote(product, loteDTO.getNumeroDeItens(), loteDTO.getDataDeValidade()));
 
+		verificaCriacaoLote(product, loteDTO);
+
+		return new ResponseEntity<>(lote, HttpStatus.CREATED);
+	}
+
+	private void verificaCriacaoLote(Produto product, LoteDTO loteDTO) {
 		try {
 			if (product.getSituacao() == Produto.INDISPONIVEL) {
 				if (loteDTO.getNumeroDeItens() > 0) {
@@ -177,11 +168,10 @@ public class RestApiController {
 					produtoService.updateProduto(produtoDisponivel);
 				}
 			}
-		} catch (ObjetoInvalidoException e) {
+		} catch (ObjetoInvalidoException e){
 			e.printStackTrace();
 		}
 
-		return new ResponseEntity<>(lote, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/lote/", method = RequestMethod.GET)
