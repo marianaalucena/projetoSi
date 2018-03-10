@@ -44,7 +44,6 @@ public class RestApiController {
 
 		if (produtos.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
-			// You many decide to return HttpStatus.NOT_FOUND
 		}
 		return new ResponseEntity<List<Produto>>(produtos, HttpStatus.OK);
 	}
@@ -69,9 +68,6 @@ public class RestApiController {
 		}
 
 		produtoService.saveProduto(produto);
-
-		// HttpHeaders headers = new HttpHeaders();
-		// headers.setLocation(ucBuilder.path("/api/produto/{id}").buildAndExpand(produto.getId()).toUri());
 
 		return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
 	}
@@ -184,7 +180,6 @@ public class RestApiController {
 
 		if (lotes.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
-			// You many decide to return HttpStatus.NOT_FOUND
 		}
 		return new ResponseEntity<List<Lote>>(lotes, HttpStatus.OK);
 	}

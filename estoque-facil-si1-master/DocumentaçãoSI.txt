@@ -1,6 +1,6 @@
 ﻿Mudanças no controller
 
-1- Usando o extract method removi do método criarProduto no controller essa parte de código
+* Usando o extract method removi do método criarProduto no controller essa parte de código
 
 boolean produtoExiste = false;
 
@@ -12,7 +12,7 @@ boolean produtoExiste = false;
 
 Criei o método produtoExiste.
 
-2- Usando o extract method removi dos métodos consultarProduto, updateProduto e deleteUser a seguinte parte de código. Acabando, dessa forma, com a duplicação de código. 
+* Usando o extract method removi dos métodos consultarProduto, updateProduto e deleteUser a seguinte parte de código. Acabando, dessa forma, com a duplicação de código. 
 
 Product p = null;
 
@@ -24,8 +24,9 @@ Product p = null;
 
 Criei o método procuraPeloId.
 
-3- Removendo código comentado
+* Removendo código comentado
 
+**
 // esse c�digo n�o precisa mais
 		// try {
 		// currentProduto.mudaSituacao(produto.pegaSituacao());
@@ -34,3 +35,5 @@ Criei o método procuraPeloId.
 		// id " + id + " invalid."),
 		// HttpStatus.NOT_FOUND);
 		// }
+**
+			// You many decide to return HttpStatus.NOT_FOUND
