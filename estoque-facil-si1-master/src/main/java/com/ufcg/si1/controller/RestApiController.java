@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.ufcg.si1.model.DTO.LoteDTO;
-import com.ufcg.si1.model.Disponivel;
+import com.ufcg.si1.model.Available;
 import com.ufcg.si1.model.Lote;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ufcg.si1.model.Produto;
-import com.ufcg.si1.model.Indisponivel;
+import com.ufcg.si1.model.Unavailable;
 import com.ufcg.si1.service.LoteService;
 import com.ufcg.si1.service.LoteServiceImpl;
 import com.ufcg.si1.service.ProdutoService;
@@ -63,7 +63,7 @@ public class RestApiController {
 		}
 
 		try {
-			produto.mudaSituacao( new Indisponivel()); //Produto.INDISPONIVEL
+			produto.mudaSituacao( new Unavailable()); //Produto.INDISPONIVEL
 		} catch (ObjetoInvalidoException e) {
 			return new ResponseEntity(new CustomErrorType("Error: Produto" + produto.getNome() + " do fabricante "
 					+ produto.getFabricante() + " alguma coisa errada aconteceu!"), HttpStatus.NOT_ACCEPTABLE);
@@ -162,10 +162,10 @@ public class RestApiController {
 	}
 
 	private void verificaCriacaoLote(Produto product, LoteDTO loteDTO) {
-			if (product.getState() instanceof Indisponivel) {   
+			if (product.getState() instanceof Unavailable) {   
 				if (loteDTO.getNumeroDeItens() > 0) {
 					Produto produtoDisponivel = product;
-					produtoDisponivel.estado = new Disponivel(); 
+					produtoDisponivel.state = new Available(); 
 					produtoService.updateProduto(produtoDisponivel);
 				}
 			}

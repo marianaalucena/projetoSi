@@ -1,6 +1,6 @@
 package com.ufcg.si1.model;
 
-public class Disponivel implements Estado {
+public class Available implements State {
 	
 	public int getState() {
 		
