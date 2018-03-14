@@ -63,7 +63,7 @@ public class RestApiController {
 		}
 
 		try {
-			produto.mudaSituacao(produto.getSituacao()); //Produto.INDISPONIVEL
+			produto.mudaSituacao(Produto.INDISPONIVEL); //Produto.INDISPONIVEL
 		} catch (ObjetoInvalidoException e) {
 			return new ResponseEntity(new CustomErrorType("Error: Produto" + produto.getNome() + " do fabricante "
 					+ produto.getFabricante() + " alguma coisa errada aconteceu!"), HttpStatus.NOT_ACCEPTABLE);

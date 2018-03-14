@@ -20,6 +20,9 @@ public class Produto {
 
 	public State state;
 	
+	public static final int INDISPONIVEL = 2;
+	public static final int DISPONIVEL = 1;
+	
 
 	public Produto() {
 		this.id = 0;
