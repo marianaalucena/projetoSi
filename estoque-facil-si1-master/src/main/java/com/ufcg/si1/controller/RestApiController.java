@@ -165,7 +165,7 @@ public class RestApiController {
 			if (product.getState() instanceof Unavailable) {   
 				if (loteDTO.getNumeroDeItens() > 0) {
 					Produto produtoDisponivel = product;
-					produtoDisponivel.state = new Available(); 
+					produtoDisponivel.setState( new Available()); 
 					produtoService.updateProduto(produtoDisponivel);
 				}
 			}

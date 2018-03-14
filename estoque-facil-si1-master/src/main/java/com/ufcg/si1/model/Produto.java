@@ -18,7 +18,7 @@ public class Produto {
 
 	private String categoria;
 
-	public State state;
+	private State state;
 	
 	
 
@@ -98,17 +98,21 @@ public class Produto {
 		
 		if (state instanceof Available) {
 			
-			this.state = new Available();
+			this.setState(new Available());
 		}
 		else if( state instanceof Unavailable) {
 			
-			this.state= new Unavailable();
+			this.setState(new Unavailable());;
 		}
 		else {
 			
 			throw new ObjetoInvalidoException("Estado invalido");
 		}
 		
+	}
+	public void setState(State novoState) {
+		
+		this.state = novoState;
 	}
 
 	public int getSituacao() throws ObjetoInvalidoException {
