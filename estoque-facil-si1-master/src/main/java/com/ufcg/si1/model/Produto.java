@@ -18,10 +18,8 @@ public class Produto {
 
 	private String categoria;
 
-	public int situacao; // usa variaveis estaticas abaixo
-	/* situacoes do produto */
-	public static final int DISPONIVEL = 1;
-	public static final int INDISPONIVEL = 2;
+	private State state;
+	
 
 	public Produto() {
 		this.id = 0;
@@ -36,7 +34,7 @@ public class Produto {
 		this.codigoBarra = codigoBarra;
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
-		this.situacao = Produto.INDISPONIVEL;
+		this.state = new Unavailable(); 
 	}
 
 	public String getNome() {
@@ -98,10 +96,10 @@ public class Produto {
 	public void mudaSituacao(int situacao) throws ObjetoInvalidoException {
 		switch (situacao) {
 		case 1:
-			this.situacao = Produto.DISPONIVEL;
+			this.state = new Available();
 			break;
 		case 2:
-			this.situacao = Produto.INDISPONIVEL;
+			this.state = new Unavailable();
 			break;
 
 		default:
@@ -110,7 +108,7 @@ public class Produto {
 	}
 
 	public int getSituacao() throws ObjetoInvalidoException {
-		return this.situacao;
+		return this.state.getState();
 	}
 
 	@Override
