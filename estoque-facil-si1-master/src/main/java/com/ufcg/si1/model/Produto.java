@@ -18,7 +18,7 @@ public class Produto {
 
 	private String categoria;
 
-	private State state;
+	public State state;
 	
 
 	public Produto() {
@@ -109,6 +109,10 @@ public class Produto {
 
 	public int getSituacao() throws ObjetoInvalidoException {
 		return this.state.getState();
+	}
+	public State getState() {
+		
+		return this.state;
 	}
 
 	@Override
