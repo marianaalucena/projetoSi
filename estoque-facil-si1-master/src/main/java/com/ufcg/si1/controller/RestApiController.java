@@ -162,17 +162,14 @@ public class RestApiController {
 	}
 
 	private void verificaCriacaoLote(Produto product, LoteDTO loteDTO) {
-		//try {
-			if (product.getState() instanceof Unavailable) {   //product.getSituacao() == Produto.INDISPONIVEL
+			if (product.getState() instanceof Unavailable) {   
 				if (loteDTO.getNumeroDeItens() > 0) {
 					Produto produtoDisponivel = product;
-					produtoDisponivel.state = new Available();  //produtoDisponivel.situacao = Produto.DISPONIVEL;
+					produtoDisponivel.state = new Available(); 
 					produtoService.updateProduto(produtoDisponivel);
 				}
 			}
-		//} catch (ObjetoInvalidoException e){
-		//	e.printStackTrace();
-		//}
+		
 
 	}
 

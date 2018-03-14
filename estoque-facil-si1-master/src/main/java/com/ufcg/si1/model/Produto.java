@@ -94,19 +94,6 @@ public class Produto {
 		this.mudaCategoria(produto.getCategoria());
 	}
 		
-//	public void mudaSituacao(int situacao) throws ObjetoInvalidoException {
-//		switch (situacao) {
-//		case 1:
-//			this.state = new Available();
-//			break;
-//		case 2:
-//			this.state = new Unavailable();
-//			break;
-//
-//		default:
-//			throw new ObjetoInvalidoException("Situacao Invalida");
-//		}
-//	}
 	public void mudaSituacao(State state) throws ObjetoInvalidoException{
 		
 		if (state instanceof Available) {

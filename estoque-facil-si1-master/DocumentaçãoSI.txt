@@ -43,6 +43,87 @@ Criei o método procuraPeloId.
 
 O comentário não tem necessidade, já que o método é utilizado
 
+4. Atualizou o verificaCriacaoLote para que seja aplicado o padrão state, antes estava da seguinte forma:
+
+private void verificaCriacaoLote(Produto product, LoteDTO loteDTO) {
+		try {
+			if (product.getSituacao() == Produto.INDISPONIVEL) {
+ 				if (loteDTO.getNumeroDeItens() > 0) {
+ 					Produto produtoDisponivel = product;
+					produtoDisponivel.situacao = Produto.DISPONIVEL;
+ 					produtoService.updateProduto(produtoDisponivel);
+ 				}
+ 			}
+		} catch (ObjetoInvalidoException e){
+			e.printStackTrace();
+		}
+
+5. Atualizou o criarProduto para que seja aplicado o padrão state, antes estava da seguinte forma:
+
+public ResponseEntity<?> criarProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) {
+ 
+ 	
+ 		if (produtoExiste(produto)) {
+ 			return new ResponseEntity(new CustomErrorType("O produto " + produto.getNome() + " do fabricante "
+ 					+ produto.getFabricante() + " ja esta cadastrado!"), HttpStatus.CONFLICT);
+ 		}
+ 
+ 		try {
+			produto.mudaSituacao(Produto.INDISPONIVEL);
+ 		} catch (ObjetoInvalidoException e) {
+ 			return new ResponseEntity(new CustomErrorType("Error: Produto" + produto.getNome() + " do fabricante "
+ 					+ produto.getFabricante() + " alguma coisa errada aconteceu!"), HttpStatus.NOT_ACCEPTABLE);
+
+}
+
+6. Extract Method no criarLote
+   Foi criado o método verificaCriacaoLote
+
+7. Foi removido do método consultarProduto o seguinte código:
+
+		currentProduto.mudaNome(produto.getNome());
+		currentProduto.setPreco(produto.getPreco());
+		currentProduto.setCodigoBarra(produto.getCodigoBarra());
+		currentProduto.mudaFabricante(produto.getFabricante());
+		currentProduto.mudaCategoria(produto.getCategoria());
+
 --> Mudanças no pacote model
 
-1. Usando o state, criou as classes 
+1. Usando o padrão de projeto state, criou-se as classes Unavailable, Available e a Interface State. 
+   Removeu da classe Produto as variáveis estáticas DISPONÍVEL e INDISPONÍVEL e removeu também a Situação do Produto.
+
+2. Modificou o método mudaSituação para que seja aplicado o padrão state, antes estava da seguinte forma:
+public void mudaSituacao(int situacao) throws ObjetoInvalidoException {
+		
+	switch (situacao) {
+		
+		case 1:
+			
+			this.situacao = Produto.DISPONIVEL;
+
+			break;
+		
+		case 2:
+			
+			this.situacao = Produto.INDISPONIVEL;
+
+			break;
+
+
+		default:
+
+			throw new ObjetoInvalidoException("Situacao Invalida");
+
+		}
+
+	}
+
+3. No método updateProduto foi acrescentado o seguinte código
+
+		this.mudaNome(produto.getNome());
+		this.setPreco(produto.getPreco());
+		this.setCodigoBarra(produto.getCodigoBarra());
+		this.mudaFabricante(produto.getFabricante());
+		this.mudaCategoria(produto.getCategoria());
+
+Antes quem fazia todas essas modificações era o Controller no método consultarProduto.
