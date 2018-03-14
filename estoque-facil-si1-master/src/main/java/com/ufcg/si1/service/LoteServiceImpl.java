@@ -26,6 +26,16 @@ public class LoteServiceImpl implements LoteService {
 
 		return lote;
 	}
+	public void notifica() {
+		
+		for(Lote lote : lotes) {
+			
+			if(lote.checaNumeroDeItens()) {
+				
+				lote.notificaItensMinimo();
+			}
+		}
+	}
 
 	@Override
 	public Lote findById(long id) {

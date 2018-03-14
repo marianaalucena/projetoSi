@@ -6,6 +6,7 @@ public class Lote {
     private Produto produto;
     private int numeroDeItens;
     private String dataDeValidade;
+    private final int NUMERO_DE_ITENS_MINIMOS = 15;
 
     public Lote() {
         this.id = 0;
@@ -23,6 +24,14 @@ public class Lote {
         this.produto = produto;
         this.numeroDeItens = numeroDeItens;
         this.dataDeValidade = dataDeValidade;
+    }
+    public boolean checaNumeroDeItens() {
+    	
+    	return this.numeroDeItens < NUMERO_DE_ITENS_MINIMOS;
+    }
+    public String notificaItensMinimo() {
+    	
+    	return "Menos de 15 produtos no lote";
     }
 
     public long getId() {
