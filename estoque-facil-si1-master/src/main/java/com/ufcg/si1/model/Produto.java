@@ -18,7 +18,7 @@ public class Produto {
 
 	private String categoria;
 
-	public State state;
+	public Estado estado;
 	
 	
 
@@ -35,7 +35,7 @@ public class Produto {
 		this.codigoBarra = codigoBarra;
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
-		this.state = new Unavailable(); 
+		this.estado = new Indisponivel(); 
 	}
 
 	public String getNome() {
@@ -94,15 +94,15 @@ public class Produto {
 		this.mudaCategoria(produto.getCategoria());
 	}
 		
-	public void mudaSituacao(State state) throws ObjetoInvalidoException{
+	public void mudaSituacao(Estado state) throws ObjetoInvalidoException{
 		
-		if (state instanceof Available) {
+		if (state instanceof Disponivel) {
 			
-			this.state = new Available();
+			this.estado = new Disponivel();
 		}
-		else if( state instanceof Unavailable) {
+		else if( state instanceof Indisponivel) {
 			
-			this.state = new Unavailable();
+			this.estado = new Indisponivel();
 		}
 		else {
 			
@@ -112,11 +112,11 @@ public class Produto {
 	}
 
 	public int getSituacao() throws ObjetoInvalidoException {
-		return this.state.getState();
+		return this.estado.getState();
 	}
-	public State getState() {
+	public Estado getState() {
 		
-		return this.state;
+		return this.estado;
 	}
 
 	@Override

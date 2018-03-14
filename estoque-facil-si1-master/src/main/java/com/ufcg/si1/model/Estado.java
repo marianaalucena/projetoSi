@@ -1,6 +1,6 @@
 package com.ufcg.si1.model;
 
-public interface State {
+public interface Estado {
 
 	int getState();
 }

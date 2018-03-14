@@ -1,6 +1,6 @@
 package com.ufcg.si1.model;
 
-public class Unavailable implements State{
+public class Indisponivel implements Estado{
 
 	
 	public int getState() {
