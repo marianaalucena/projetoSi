@@ -63,7 +63,6 @@ public class ProdutoServiceImpl implements ProdutoService {
 		}
 	}
 
-	// este metodo nunca eh chamado, mas se precisar estah aqui
 	public int size() {
 		return produtos.size();
 	}

@@ -1,6 +1,6 @@
-﻿Mudanças no controller
+﻿--> Mudanças no pacote controller
 
-* Usando o extract method removi do método criarProduto no controller essa parte de código
+1. Usando o extract method removi do método criarProduto no controller essa parte de código
 
 boolean produtoExiste = false;
 
@@ -12,7 +12,7 @@ boolean produtoExiste = false;
 
 Criei o método produtoExiste.
 
-* Usando o extract method removi dos métodos consultarProduto, updateProduto e deleteUser a seguinte parte de código. Acabando, dessa forma, com a duplicação de código. 
+2. Usando o extract method removi dos métodos consultarProduto, updateProduto e deleteUser a seguinte parte de código. Acabando, dessa forma, com a duplicação de código. 
 
 Product p = null;
 
@@ -24,9 +24,9 @@ Product p = null;
 
 Criei o método procuraPeloId.
 
-* Removendo código comentado
+3. Removendo código comentado
 
-**
+3.1
 // esse c�digo n�o precisa mais
 		// try {
 		// currentProduto.mudaSituacao(produto.pegaSituacao());
@@ -35,5 +35,14 @@ Criei o método procuraPeloId.
 		// id " + id + " invalid."),
 		// HttpStatus.NOT_FOUND);
 		// }
-**
+3.2
 			// You many decide to return HttpStatus.NOT_FOUND
+
+3.3
+	// este metodo nunca eh chamado, mas se precisar estah aqui
+
+O comentário não tem necessidade, já que o método é utilizado
+
+--> Mudanças no pacote model
+
+1. Usando o state, criou as classes 

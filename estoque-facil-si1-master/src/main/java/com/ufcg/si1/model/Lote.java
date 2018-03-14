@@ -53,6 +53,7 @@ public class Lote {
         return dataDeValidade;
     }
 
+    
     public void setDataDeValidade(String dataDeValidade) {
         this.dataDeValidade = dataDeValidade;
     }
